@@ -18,6 +18,8 @@ void loop()
 
 }
 
+
+//Movimientos básicos del robot
 void adelante()
 {
   digitalWrite(motor_i_adelante, HIGH);
