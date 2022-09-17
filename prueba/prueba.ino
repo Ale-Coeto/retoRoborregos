@@ -44,13 +44,34 @@ void setup()
 
 void loop() 
 {
-  if(((ultrasonico_derecho >=10) AND (ultrasonico_derecho <= 20)) AND (ultrasonico delantero > 30))
+  // 1 pared a la derecha y 0 adelante  Se mueve adelante
+  if(((ultrasonico_derecha >=10) AND (ultrasonico_derecha <= 20)) AND (ultrasonico_adelante > 30))
   {
     adelante();
-    delay(1000);
-    alto();    
+    delay(1000);  
   }
-}
+
+  // 0 pared a la derecha y 1 adelante  Gira derecha y se mueve adelante
+  if(((ultrasonico_adelante >=10) AND (ultrasonico_adelante <= 20)) AND (ultrasonico_derecha > 30))
+  {
+    derecha();
+    delay(1000);
+  }
+
+  // 1 pared a la derecha y 1 adelante  Gira izquierda y se mueve adelante 
+  if(((ultrasonico_adelante >=10) AND (ultrasonico_adelante <= 20)) AND ((ultrasonico_derecha >= 30) AND (ultrasonico_derecha <= 20)))
+  {
+    izquierda();
+    delay(1000);
+  }
+
+  // 0 pared a la derecha y 0 adelante  Gira derecha y se mueve adelante 
+  if(((ultrasonico_adelante >=10) AND (ultrasonico_adelante <= 20)) AND (ultrasonico_derecha > 30))
+  {
+    derecha();
+    delay(1000);
+  }
+
 
 // Ultrasonico adelante
 void ultrasonico_adelante()
@@ -120,20 +141,99 @@ void atras()
   digitalWrite(motor_i_atras, HIGH);
   digitalWrite(motor_d_adelante, LOW);
   digitalWrite(motor_d_atras, HIGH);
+
+  if(millis()-time_old >=50)
+      {
+        detachInterrupt(digitalPinToInterrupt(encoder_pin1));
+        rpm = (60 * 100 / pulses_per_turn )/ (millis() - time_old)* pulses;
+        time_old=millis();
+        pase = pulses + pase;
+        pulses = 0;
+        attachInterrupt(digitalPinToInterrupt(encoder_pin1), count, FALLING ); // Triggering count function everytime the encoder pin1 turns from 1 to 0
+      }
+
+  digitalWrite(motor_i_adelante, LOW);
+  digitalWrite(motor_i_atras, LOW);
+  digitalWrite(motor_d_adelante, LOW);
+  digitalWrite(motor_d_atras, LOW);
+  pase = 0;
 }
 
 void izquierda()
 {
+  // Girar a la izquierda (predefinido)
   digitalWrite(motor_i_adelante, LOW);
   digitalWrite(motor_i_atras, HIGH);
   digitalWrite(motor_d_adelante, HIGH);
   digitalWrite(motor_d_atras, LOW);
+  delay(500);                               // Ajustar tiempo para establecer bien el giro
+  digitalWrite(motor_i_adelante, LOW);
+  digitalWrite(motor_i_atras, LOW);
+  digitalWrite(motor_d_adelante, LOW);
+  digitalWrite(motor_d_atras, LOW);
+
+// Se mueve adelante 1 unidad
+  while(pase <= 30)
+  {
+    digitalWrite(motor_i_adelante, HIGH);
+    digitalWrite(motor_i_atras, LOW);
+    digitalWrite(motor_d_adelante, HIGH);
+    digitalWrite(motor_d_atras, LOW);
+    
+
+    if(millis()-time_old >=50)
+      {
+        detachInterrupt(digitalPinToInterrupt(encoder_pin1));
+        rpm = (60 * 100 / pulses_per_turn )/ (millis() - time_old)* pulses;
+        time_old=millis();
+        pase = pulses + pase;
+        pulses = 0;
+        attachInterrupt(digitalPinToInterrupt(encoder_pin1), count, FALLING ); // Triggering count function everytime the encoder pin1 turns from 1 to 0
+      }
+
+    digitalWrite(motor_i_adelante, LOW);
+    digitalWrite(motor_i_atras, LOW);
+    digitalWrite(motor_d_adelante, LOW);
+    digitalWrite(motor_d_atras, LOW);
+    pase = 0;
+  }
 }
 
 void derecha()
 {
+  // Girar a la izquierda (predefinido)
   digitalWrite(motor_i_adelante, HIGH);
   digitalWrite(motor_i_atras, LOW);
   digitalWrite(motor_d_adelante, LOW);
   digitalWrite(motor_d_atras, HIGH);
+  delay(500);                               // Ajustar tiempo para establecer bien el giro
+  digitalWrite(motor_i_adelante, LOW);
+  digitalWrite(motor_i_atras, LOW);
+  digitalWrite(motor_d_adelante, LOW);
+  digitalWrite(motor_d_atras, LOW);
+
+    while(pase <= 30)
+  {
+    digitalWrite(motor_i_adelante, HIGH);
+    digitalWrite(motor_i_atras, LOW);
+    digitalWrite(motor_d_adelante, HIGH);
+    digitalWrite(motor_d_atras, LOW);
+    
+
+    if(millis()-time_old >=50)
+      {
+        detachInterrupt(digitalPinToInterrupt(encoder_pin1));
+        rpm = (60 * 100 / pulses_per_turn )/ (millis() - time_old)* pulses;
+        time_old=millis();
+        pase = pulses + pase;
+        pulses = 0;
+        attachInterrupt(digitalPinToInterrupt(encoder_pin1), count, FALLING ); // Triggering count function everytime the encoder pin1 turns from 1 to 0
+      }
+
+    digitalWrite(motor_i_adelante, LOW);
+    digitalWrite(motor_i_atras, LOW);
+    digitalWrite(motor_d_adelante, LOW);
+    digitalWrite(motor_d_atras, LOW);
+    pase = 0;
+  }
 }
