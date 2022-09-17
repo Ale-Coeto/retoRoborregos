@@ -1,3 +1,4 @@
+// Motor izquierdo
 int motor_i_adelante = 2;
 int motor_i_atras = 3;
 
