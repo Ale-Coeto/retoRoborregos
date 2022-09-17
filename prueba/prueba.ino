@@ -57,7 +57,7 @@ void count()
 //Movimientos básicos del robot
 void adelante()
 {
-  while(pase <= 20)
+  while(pase <= 30)
   {
     digitalWrite(motor_i_adelante, HIGH);
     digitalWrite(motor_i_atras, LOW);
