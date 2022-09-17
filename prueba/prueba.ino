@@ -83,7 +83,6 @@ void ultrasonico_adelante()
   digitalWrite(trigPinDelantero, LOW);
   duration = pulseIn(echoPinDelantero, HIGH);
   distanceDelantera = duration * 0.034 / 2;
-  Serial.print(distanceDelantera);
   return(distanceDelantera);
 }
 
@@ -97,7 +96,6 @@ void ultrasonico_derecha()
     digitalWrite(trigPinDerecha, LOW);
     duration = pulseIn(echoPinDerecha, HIGH);
     distanceDerecha = duration * 0.034 / 2;
-    Serial.print(distanceDerecha);
     return(distanceDerecha);
   }
 
