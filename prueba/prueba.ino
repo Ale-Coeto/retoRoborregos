@@ -53,6 +53,8 @@ void count()
     pulses++;
   }
 
+
+//Movimientos básicos del robot
 void adelante()
 {
   while(pase <= 20)
