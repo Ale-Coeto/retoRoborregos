@@ -7,12 +7,12 @@ int motor_d_adelante = 4;
 int motor_d_atras = 5;
 
 // Ultrasonico delantero
-#define echoPinDelantero 
-#define trigPinDelantero 
+#define echoPinDelantero 22
+#define trigPinDelantero 23
 
 // Ultrasonioc derecha
-#define echoPinDerecha 
-#define trigPinDerecha 
+#define echoPinDerecha 24
+#define trigPinDerecha 25
 
 //encoder
 unsigned long time_old;
@@ -44,15 +44,47 @@ void setup()
 
 void loop() 
 {
-
+  if(((ultrasonico_derecho >=10) AND (ultrasonico_derecho <= 20)) AND (ultrasonico delantero > 30))
+  {
+    adelante();
+    delay(1000);
+    alto();    
+  }
 }
+
+// Ultrasonico adelante
+void ultrasonico_adelante()
+{
+  digitalWrite(trigPinDelantero, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPinDelantero, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPinDelantero, LOW);
+  duration = pulseIn(echoPinDelantero, HIGH);
+  distanceDelantera = duration * 0.034 / 2;
+  Serial.print(distanceDelantera);
+  return(distanceDelantera);
+}
+
+// Ultrasonico derecha
+void ultrasonico_derecha()
+  {
+    digitalWrite(trigPinDerecha, LOW);
+    delayMicroseconds(2);
+    digitalWrite(trigPinDerecha, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trigPinDerecha, LOW);
+    duration = pulseIn(echoPinDerecha, HIGH);
+    distanceDerecha = duration * 0.034 / 2;
+    Serial.print(distanceDerecha);
+    return(distanceDerecha);
+  }
 
 // Contador del encoder
 void count()
   {
     pulses++;
   }
-
 
 //Movimientos básicos del robot
 void adelante()
